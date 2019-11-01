@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+//teste
 namespace SGQ.Auth.Configuracoes
 {    public class ConfiguracoesDeAutenticacao
     {
