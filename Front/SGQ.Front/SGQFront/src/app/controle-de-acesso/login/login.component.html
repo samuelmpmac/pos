@@ -1,0 +1,25 @@
+<form class="form-signin" #f="ngForm" (ngSubmit)="signIn(f.value)">
+    <h2 class="form-signin-heading">Login</h2>
+    <p class="lead">Informe seus dados abaixo para efetuar login no sistema</p>
+    <div *ngIf="loginInvalido" class="alert alert-danger" role="alert" >
+        <div *ngFor="let erro of mensagensDeErro">
+            <div>
+               {{ erro.errorMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail" class="sr-only">E-mail</label>
+        <input type="email" id="inputEmail" name="email" ngModel #email="ngModel" class="form-control" placeholder="E-mail" required
+            autofocus>
+          <!---  <div class="alert alert-danger" *ngIf="email.touched && !email.valid">E-mail não informado.</div>-->
+    </div>
+    <div class="form-group">
+        <label for="inputSenha" class="sr-only">Senha</label>
+
+        <input type="password" id="inputSenha" name="senha" ngModel class="form-control" placeholder="Senha" required>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-block btn-primary" type="submit">Efetuar login</button>
+    </div>
+</form>

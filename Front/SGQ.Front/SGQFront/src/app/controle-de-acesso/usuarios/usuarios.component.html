@@ -1,0 +1,30 @@
+<p>
+  <a
+    href=""
+    class="btn btn-primary"
+    routerLink="/controle-de-acesso/usuarios/novo"
+    >Criar usuário</a
+  >
+</p>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>E-mail</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarios">
+      <td>{{ usuario.nome }}</td>
+      <td>{{ usuario.email }}</td>
+      <td>
+        <a [routerLink]="['/controle-de-acesso/usuarios', usuario.id]"
+          >Editar</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>

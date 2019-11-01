@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <!--<a class="navbar-brand" href="#">SGQ - Sistema de Gestão de Qualidade</a>-->
+    <span class="navbar-brand">SGQ</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPrincipal"
+        aria-controls="navbarPrincipal" aria-expanded="false" aria-label="Toggle navigation"
+        (click)="toggleMenuResponsivo()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarPrincipal" [ngbCollapse]="!mostrarMenuResponsivo">
+        <ul class="navbar-nav mr-auto">
+            <li *ngIf="usuarioPossuiPerfil(PerfisDeAcessoDisponiveis.AdministradorDeProcessos)" ngbDropdown class="nav-item dropdown">
+                <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropDownProcessos" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Processos automotivos</a>
+                <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropDownProcessos">
+                    <a class="dropdown-item" routerLink="/processos/pecas" (click)="mostrarMenuResponsivo = false;">Gerenciar peças</a>
+                </div>
+            </li>
+
+            <li *ngIf="usuarioPossuiPerfil(PerfisDeAcessoDisponiveis.AdministradorDoControleDeAcesso)" ngbDropdown class="nav-item dropdown">
+                <a ngbDropdownToggle class="nav-link dropdown-toggle"  id="dropDownControleDeAcesso" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Controle de acesso</a>
+                <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropDownControleDeAcesso">
+                    <a class="dropdown-item" routerLink="/controle-de-acesso/usuarios" (click)="mostrarMenuResponsivo = false;">Gerenciar usuários</a>
+                </div>
+            </li>
+        </ul>
+
+        <ul *ngIf="usuarioEstaLogado" class="navbar-nav ml-auto">
+            <li role="separator" class="divider"></li>
+            <li ngbDropdown class="nav-item dropdown">
+                <a ngbDropdownToggle class="nav-link dropdown-toggle"  id="dropDownUsuario" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">{{ nomeDoUsuarioLogado }}</a>
+                <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropDownUsuario">
+                    <a class="dropdown-item pointer" >Alterar senha</a>
+                    <a class="dropdown-item pointer" (click)="logout(); mostrarMenuResponsivo = false;">Logoff</a>
+                </div>
+            </li>
+        </ul>
+
+        <a *ngIf="!usuarioEstaLogado" routerLink="login" (click)="mostrarMenuResponsivo = false;">Login</a>
+    </div>
+</nav>
