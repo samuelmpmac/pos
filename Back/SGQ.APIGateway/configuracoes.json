@@ -1,5 +1,9 @@
 {
   "ReRoutes": [
+
+    //Controle de acesso ---------------------------------------------
+
+    // >> Usuários --------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/v1/Usuarios/",
       "DownstreamScheme": "https",
@@ -9,8 +13,179 @@
           "Port": 6001
         }
       ],
-      "UpstreamPathTemplate": "/Usuarios/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]   
+      "UpstreamPathTemplate": "/v1/Usuarios/",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Usuarios/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6001
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Usuarios/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Delete" ]
+    },
+
+    // >> Login --------------------------------------------------
+
+    {
+      "DownstreamPathTemplate": "/api/v1/Auth/login",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6001
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Auth/login",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+
+    //Controle de processos automotivos ------------------------------
+
+    {
+      "DownstreamPathTemplate": "/api/v1/Pecas/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 4000
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Pecas/",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Pecas/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 4000
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Pecas/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Delete" ]
+    },
+
+    //Compliance -----------------------------------------------------
+
+    {
+      "DownstreamPathTemplate": "/api/v1/Compliance/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2000
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Compliance/{everything}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Compliance?filtro={filtro}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2000
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Compliance?filtro={filtro}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Compliance",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2000
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Compliance/",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    //Mocks ----------------------------------------------------------
+
+    // >> Consultorias e acessorias -------------------------------------------------------
+    {
+      "DownstreamPathTemplate": "/api/v1/ConsultoriaEAcessoria/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1002
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/ConsultoriaEAcessoria/{everything}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/ConsultoriaEAcessoria?filtro={filtro}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1002
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/ConsultoriaEAcessoria?filtro={filtro}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/ConsultoriaEAcessoria",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1002
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/ConsultoriaEAcessoria/",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    // >> Normas ------------------------------------------------------------------------
+    {
+      "DownstreamPathTemplate": "/api/v1/Normas/{identificador}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2002
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Normas/{identificador}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Normas?filtro={filtro}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2002
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Normas?filtro={filtro}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Normas",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2002
+        }
+      ],
+      "UpstreamPathTemplate": "/v1/Normas/",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
   "GlobalConfiguration": {

@@ -8,7 +8,7 @@ namespace SGQ.ControleDeAcesso.Servicos
 {
     public class ServicoDeValidacaoDeGravacaoDeUsuario
     {
-        public static List<String> Validar(Usuario usuario)
+        public static List<String> Validar(Usuario usuario, Boolean validarSenha = true)
         {
             var mensagens = new List<String>();
 
@@ -17,7 +17,7 @@ namespace SGQ.ControleDeAcesso.Servicos
                 mensagens.Add("É obrigatório fornecer o e-mail do usuário");
             }
 
-            if (String.IsNullOrWhiteSpace(usuario.Senha))
+            if (validarSenha && String.IsNullOrWhiteSpace(usuario.Senha))
             {
                 mensagens.Add("É obrigatório fornecer a senha do usuário");
             }

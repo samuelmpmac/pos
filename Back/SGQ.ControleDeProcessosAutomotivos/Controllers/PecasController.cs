@@ -12,7 +12,7 @@ using SGQ.ControleDeProcessosAutomotivos.Servicos;
 
 namespace SGQ.ControleDeProcessosAutomotivos.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class PecasController

@@ -95,7 +95,7 @@ namespace SGQ.ControleDeAcesso.Controllers
                 return BadRequest();
             }
 
-            var mensagensDeErro = ServicoDeValidacaoDeGravacaoDeUsuario.Validar(usuario);
+            var mensagensDeErro = ServicoDeValidacaoDeGravacaoDeUsuario.Validar(usuario, false);
             if (mensagensDeErro.Any())
             {
                 return BadRequest(mensagensDeErro);
