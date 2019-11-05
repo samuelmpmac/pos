@@ -1,3 +1,4 @@
+import { PecasService } from './pecas.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PecasComponent implements OnInit {
 
-  constructor() { }
+  public pecas;
+
+  constructor(private usuariosService: PecasService) { }
 
   ngOnInit() {
+    this.usuariosService.obterTodas()
+    .subscribe(
+      result => {
+        if (result) {
+          this.pecas = result;
+        }
+      },
+      error => {
+      }
+    );
   }
 
 }

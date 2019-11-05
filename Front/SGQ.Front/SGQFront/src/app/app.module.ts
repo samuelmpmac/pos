@@ -1,3 +1,4 @@
+import { DefinicaoDeUrlsDeApis } from './definicao-de-urls-de-apis';
 import { AutenticacaoService } from './controle-de-acesso/servicos/autenticacao.service';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +16,8 @@ import { UsuarioComponent } from './controle-de-acesso/usuario/usuario.component
 import { LoginComponent } from './controle-de-acesso/login/login.component';
 import { NormaOuControleComponent } from './compliance/norma-ou-controle/norma-ou-controle.component';
 import { FormsModule } from '@angular/forms';
+import { UsuarioService } from './controle-de-acesso/usuario/usuario.service';
+import { UsuariosService } from './controle-de-acesso/usuarios/usuarios.service';
 
 
 @NgModule({
@@ -37,17 +40,22 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'login', component: LoginComponent },      
+      { path: 'login', component: LoginComponent },
       { path: 'controle-de-acesso/usuarios/novo', component: UsuarioComponent },
       { path: 'controle-de-acesso/usuarios/:id', component: UsuarioComponent },
       { path: 'controle-de-acesso/usuarios', component: UsuariosComponent },
       /*{ path: 'controle-de-acesso/usuario', component: UsuarioComponent },      */
+      { path: 'processos/pecas/novo', component: PecaComponent },
+      { path: 'processos/pecas/:id', component: PecaComponent },
       { path: 'processos/pecas', component: PecasComponent },
       /*{ path: 'processos/peca', component: PecaComponent },*/
     ])
   ],
   providers: [
-    AutenticacaoService
+    AutenticacaoService,
+    DefinicaoDeUrlsDeApis,
+    UsuarioService,
+    UsuariosService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,28 @@
-<p>norma-ou-controle works!</p>
+<table class="table">
+  <tbody>
+    <ng-container *ngFor="let norma of normas">
+      <tr>
+        <td colspan="3">
+          <input type="checkbox" [(ngModel)]="norma.selecionado" />
+          <strong>
+            {{
+              (norma.norma.tipo == "1" ? "" : norma.norma.grupo + " - ") + norma.norma.nome
+            }}</strong
+          >
+        </td>
+      </tr>
+      <tr>
+          <td>Tipo:</td>
+          <td colspan="2">
+            Descrição:
+          </td>
+        </tr>
+      <tr>
+        <td>{{ norma.norma.tipo == "0" ? "Norma" : "Controle" }}</td>
+        <td colspan="2">
+          {{ norma.norma.descricao }}
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

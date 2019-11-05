@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { fromEventPattern } from 'rxjs';
+import { UsuariosService } from './usuarios.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -8,17 +9,24 @@ import { fromEventPattern } from 'rxjs';
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor() { }
+  constructor(private usuariosService: UsuariosService) { }
+
+  public usuarios;
 
   ngOnInit() {
+
+    this.usuariosService.obterTodos()
+      .subscribe(
+        result => {
+          if (result) {
+            this.usuarios = result;
+          }
+        },
+        error => {
+        }
+      );
   }
 
-  public get usuarios() {
-    let a = [];
-    for (let i = 0; i < 1000; i++) {
-      a.push({ id: '1111', email: 'samuel.macedo@mxm.com.br', nome: 'Samuel Machado Pina de Macedo' });
-    }
-    return a;
 
-  }
+
 }

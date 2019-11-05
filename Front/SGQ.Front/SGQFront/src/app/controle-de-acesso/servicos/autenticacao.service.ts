@@ -1,6 +1,7 @@
+import { DefinicaoDeUrlsDeApis } from './../../definicao-de-urls-de-apis';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpBackend } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
@@ -9,13 +10,12 @@ import { Observable, throwError } from 'rxjs';
 })
 export class AutenticacaoService {
 
-  private readonly url = 'https://localhost:6001/api/v1/auth/login';
 
-  constructor(private http: HttpClient, private httpb: HttpClient) {
+  constructor(private http: HttpClient, private urls: DefinicaoDeUrlsDeApis) {
   }
 
   login(credentials) {
-    console.log('aqui');
+    console.log(this.urls);
     /*
     this.http.get('', {observe: 'response'})
     .subscribe(response =>{
@@ -24,7 +24,7 @@ export class AutenticacaoService {
     ;
     */
     //console.log(JSON.stringify(credentials));
-    return this.http.post(this.url, credentials, { observe: 'response' })
+    return this.http.post(this.urls.login, credentials, { observe: 'response' })
       .pipe(
         map(response => this.trataRetorno(response)),
         catchError(erro => { console.log(erro); return throwError(erro.error); })
@@ -44,7 +44,9 @@ export class AutenticacaoService {
 
     let jwtHelper = new JwtHelperService();
     let token = localStorage.getItem('token');
-    if (!token) return false;
+    if (!token) {
+      return false;
+    }
     let isExpired = jwtHelper.isTokenExpired(token);
     return !isExpired;
   }

@@ -1,1 +1,28 @@
-<p>pecas works!</p>
+<p>
+    <a
+      href=""
+      class="btn btn-primary"
+      routerLink="/processos/pecas/novo"
+      >Criar peça</a
+    >
+  </p>
+
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let peca of pecas">
+        <td>{{ peca.nome }}</td>
+        <td>{{ peca.descricao }}</td>
+        <td>
+          <a [routerLink]="['/processos/pecas', peca.id]">Editar</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
