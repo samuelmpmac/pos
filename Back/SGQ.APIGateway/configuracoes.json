@@ -14,7 +14,7 @@
         }
       ],
       "UpstreamPathTemplate": "/v1/Usuarios/",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [ "Get", "Post" ]
     },
     {
       "DownstreamPathTemplate": "/api/v1/Usuarios/{everything}",

@@ -1,4 +1,5 @@
-﻿using SGQ.ControleDeAcesso.Entidades;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SGQ.ControleDeAcesso.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace SGQ.ControleDeAcesso.Servicos
 {
     public class ServicoDeValidacaoDeGravacaoDeUsuario
     {
-        public static List<String> Validar(Usuario usuario, Boolean validarSenha = true)
+        public static ModelErrorCollection Validar(Usuario usuario, Boolean validarSenha = true)
         {
-            var mensagens = new List<String>();
+            var mensagens = new ModelErrorCollection();
 
             if (String.IsNullOrWhiteSpace(usuario.Email))
             {
@@ -20,6 +21,12 @@ namespace SGQ.ControleDeAcesso.Servicos
             if (validarSenha && String.IsNullOrWhiteSpace(usuario.Senha))
             {
                 mensagens.Add("É obrigatório fornecer a senha do usuário");
+            }
+
+
+            if (validarSenha && !String.IsNullOrWhiteSpace(usuario.Senha) && usuario.Senha.Length < 6)
+            {
+                mensagens.Add("A senha deve ter no mínimo 6 caracteres");
             }
 
             if (String.IsNullOrWhiteSpace(usuario.Nome))

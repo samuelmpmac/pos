@@ -22,8 +22,8 @@ namespace SGQ.Compliance.Servicos
             var referencias = new List<ReferenciaPadronizada>();
             using (var httpClient = new HttpClient())
             {
-                referencias.AddRange(await ObterConsultoria(httpClient, filtro));
                 referencias.AddRange(await ObterNormas(httpClient, filtro));
+                referencias.AddRange(await ObterConsultoria(httpClient, filtro));                
             }
             return referencias;
         }
@@ -46,7 +46,7 @@ namespace SGQ.Compliance.Servicos
                         Tipo = Enumeradores.TipoDeReferencia.ControleDeGovernanca,
                         Grupo = " - ",
                         Nome = controle.Nome,
-                        Descricao = controle.Nome
+                        Descricao = controle.Descricao
                     };
 
                     controle.Procedimentos.ForEach(
@@ -85,7 +85,7 @@ namespace SGQ.Compliance.Servicos
                         Tipo = Enumeradores.TipoDeReferencia.Norma,
                         Grupo = norma.Grupo,
                         Nome = norma.Nome,
-                        Descricao = norma.Nome
+                        Descricao = norma.Descricao
                     };
 
                     norma.Procedimentos.ForEach(

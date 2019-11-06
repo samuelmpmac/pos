@@ -22,6 +22,26 @@ export class UsuarioService {
   }
 
   public alterar(usuario: Usuario) {
+    return this.http.put(this.urls.usuarios + '/' + usuario.id, usuario, { observe: 'response' })
+      .pipe(
+        map(response => true),
+        catchError(erro => { console.log(erro); return throwError(erro.error); })
+      );
+  }
 
+  public obter(id) {
+    return this.http.get(this.urls.usuarios + '/' + id, { observe: 'response' })
+      .pipe(
+        map(response => response.body),
+        catchError(erro => { console.log(erro); return throwError(erro.error); })
+      );
+  }
+
+  public excluir(id) {
+    return this.http.delete(this.urls.usuarios + '/' + id, { observe: 'response' })
+      .pipe(
+        map(response => true),
+        catchError(erro => { console.log(erro); return throwError(erro.error); })
+      );
   }
 }

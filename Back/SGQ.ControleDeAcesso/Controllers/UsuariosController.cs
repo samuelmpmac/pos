@@ -18,7 +18,7 @@ using SGQ.Auth.Constantes;
 
 namespace SGQ.ControleDeAcesso.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     //[AutorizacaoPorPerfil(PerfilDeUsuario.AdministradorDoSistema)]
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -35,26 +35,57 @@ namespace SGQ.ControleDeAcesso.Controllers
             configuracoesDeAutenticacao = appSettings.Value;
         }
 
-        [HttpGet]                
-        public async Task<ActionResult> teste()
+        [HttpGet]
+        public async Task<ActionResult> Listar()
         {
-            return Ok(
-                new List<object>
+            var usuariosRetorno = new List<Usuario>();
+            var usuarios = userManager.Users;
+            foreach (var usuario in usuarios)
+            {
+                var clains = userManager.GetClaimsAsync(usuario).Result;
+                var usuarioRetorno = new Usuario();
+                usuarioRetorno.Id = usuario.Id;
+                usuarioRetorno.Email = clains.Single(c => c.Type == "Email").Value;
+                usuarioRetorno.Nome = clains.Single(c => c.Type == "Nome").Value;
+                var perfis = clains.Single(c => c.Type == "Perfis").Value.Split(',');
+                var perfisDoUsuario = new List<String>();
+                foreach (var perfil in perfis)
                 {
-                  new  { Codigo = 1, Descricao = "aaaaaa" },
-                  new  { Codigo = 2, Descricao = "bbbb" },
+                    perfisDoUsuario.Add(perfil);
                 }
-                );
+                usuarioRetorno.Perfis = perfisDoUsuario.ToArray();
+                usuariosRetorno.Add(usuarioRetorno);
+            }
+            return Ok(usuariosRetorno);
         }
 
-        [HttpGet("{email}")]
-        public async Task<ActionResult> Obter(String email)
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Obter(String id)
         {
-            return Ok(await userManager.FindByEmailAsync(email));
+            var usuario = await userManager.FindByIdAsync(id);
+            if(usuario == null)
+            {
+                return NotFound();
+            }
+
+            var clains = userManager.GetClaimsAsync(usuario).Result;
+            var usuarioRetorno = new Usuario();
+            usuarioRetorno.Id = usuario.Id;
+            usuarioRetorno.Email = clains.Single(c => c.Type == "Email").Value;
+            usuarioRetorno.Nome = clains.Single(c => c.Type == "Nome").Value;
+            var perfis = clains.Single(c => c.Type == "Perfis").Value.Split(',');
+            var perfisDoUsuario = new List<String>();
+            foreach (var perfil in perfis)
+            {
+                perfisDoUsuario.Add(perfil);
+            }
+            usuarioRetorno.Perfis = perfisDoUsuario.ToArray();
+
+            return Ok(usuarioRetorno);
         }
 
-        
-        [HttpPost]        
+
+        [HttpPost]
         public async Task<ActionResult> Registrar(Usuario usuario)
         {
             var mensagensDeErro = ServicoDeValidacaoDeGravacaoDeUsuario.Validar(usuario);
@@ -83,7 +114,7 @@ namespace SGQ.ControleDeAcesso.Controllers
 
             await userManager.AddClaimsAsync(identityUser, claims);
 
-            return CreatedAtAction(nameof(Obter), new { email = identityUser.Email }, userManager.FindByEmailAsync(identityUser.Email));
+            return CreatedAtAction(nameof(Obter), new { Id = identityUser.Id }, userManager.FindByIdAsync(identityUser.Id));
         }
 
 
@@ -111,7 +142,7 @@ namespace SGQ.ControleDeAcesso.Controllers
 
             usuarioExistente.UserName = usuario.Email;
             usuarioExistente.Email = usuario.Email;
-       
+
 
             var claims = new List<Claim>
             {
@@ -125,6 +156,20 @@ namespace SGQ.ControleDeAcesso.Controllers
             await userManager.AddClaimsAsync(usuarioExistente, claims);
 
             //falta senha
+
+            return NoContent();
+        }
+
+        [HttpDelete("{identificador}")]
+        public async Task<IActionResult> Atualizar(String identificador)
+        {
+            var usuario = userManager.FindByIdAsync(identificador).Result;
+            if(usuario == null)
+            {
+                return NotFound();
+            }
+
+            await userManager.DeleteAsync(usuario);
 
             return NoContent();
         }

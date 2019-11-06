@@ -1,4 +1,5 @@
-﻿using SGQ.ControleDeProcessosAutomotivos.Entidades;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SGQ.ControleDeProcessosAutomotivos.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace SGQ.ControleDeProcessosAutomotivos.Servicos
 {
     public static class ServicoDeValidacaoDeGravacaoDePeca
     {
-        public static List<String> Validar(Peca peca)
+        public static ModelErrorCollection Validar(Peca peca)
         {
-            var mensagens = new List<String>();
+            var mensagens = new ModelErrorCollection();
 
             if(String.IsNullOrWhiteSpace(peca.Nome))
             {
