@@ -1,3 +1,5 @@
+import { PerfisDeAcessoDisponiveis, TextoDosPerfisDeAcessoDisponiveis } from './controle-de-acesso/perfis-de-acesso/perfis-de-acesso-disponiveis';
+import { AuthGuard } from './controle-de-acesso/servicos/auth-guard.service';
 import { DefinicaoDeUrlsDeApis } from './definicao-de-urls-de-apis';
 import { AutenticacaoService } from './controle-de-acesso/servicos/autenticacao.service';
 import { RouterModule } from '@angular/router';
@@ -18,6 +20,8 @@ import { NormaOuControleComponent } from './compliance/norma-ou-controle/norma-o
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from './controle-de-acesso/usuario/usuario.service';
 import { UsuariosService } from './controle-de-acesso/usuarios/usuarios.service';
+import { SemAcessoComponent } from './controle-de-acesso/erros/sem-acesso/sem-acesso.component';
+import { PerfilAuthGuard } from './controle-de-acesso/servicos/perfil-auth-guard.service';
 
 
 @NgModule({
@@ -30,7 +34,8 @@ import { UsuariosService } from './controle-de-acesso/usuarios/usuarios.service'
     UsuariosComponent,
     UsuarioComponent,
     LoginComponent,
-    NormaOuControleComponent
+    NormaOuControleComponent,
+    SemAcessoComponent
   ],
   imports: [
     BrowserModule,
@@ -41,21 +46,54 @@ import { UsuariosService } from './controle-de-acesso/usuarios/usuarios.service'
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'controle-de-acesso/usuarios/novo', component: UsuarioComponent },
-      { path: 'controle-de-acesso/usuarios/:id', component: UsuarioComponent },
-      { path: 'controle-de-acesso/usuarios', component: UsuariosComponent },
-      /*{ path: 'controle-de-acesso/usuario', component: UsuarioComponent },      */
-      { path: 'processos/pecas/novo', component: PecaComponent },
-      { path: 'processos/pecas/:id', component: PecaComponent },
-      { path: 'processos/pecas', component: PecasComponent },
-      /*{ path: 'processos/peca', component: PecaComponent },*/
+
+      {
+        path: 'controle-de-acesso/usuarios/novo', component: UsuarioComponent,
+        canActivate: [AuthGuard, PerfilAuthGuard], data: {
+          perfil: PerfisDeAcessoDisponiveis[PerfisDeAcessoDisponiveis.AdministradorDoControleDeAcesso]
+        }
+      },
+      {
+        path: 'controle-de-acesso/usuarios/:id', component: UsuarioComponent,
+        canActivate: [AuthGuard, PerfilAuthGuard], data: {
+          perfil: PerfisDeAcessoDisponiveis[PerfisDeAcessoDisponiveis.AdministradorDoControleDeAcesso]
+        }
+      },
+      {
+        path: 'controle-de-acesso/usuarios', component: UsuariosComponent,
+        canActivate: [AuthGuard, PerfilAuthGuard], data: {
+          perfil: PerfisDeAcessoDisponiveis[PerfisDeAcessoDisponiveis.AdministradorDoControleDeAcesso]
+        }
+      },
+
+      {
+        path: 'processos/pecas/novo', component: PecaComponent,
+        canActivate: [AuthGuard, PerfilAuthGuard], data: {
+          perfil: PerfisDeAcessoDisponiveis[PerfisDeAcessoDisponiveis.AdministradorDeProcessos]
+        }
+      },
+      {
+        path: 'processos/pecas/:id', component: PecaComponent,
+        canActivate: [AuthGuard, PerfilAuthGuard], data: {
+          perfil: PerfisDeAcessoDisponiveis[PerfisDeAcessoDisponiveis.AdministradorDeProcessos]
+        }
+      },
+      {
+        path: 'processos/pecas', component: PecasComponent,
+        canActivate: [AuthGuard, PerfilAuthGuard], data: {
+          perfil: PerfisDeAcessoDisponiveis[PerfisDeAcessoDisponiveis.AdministradorDeProcessos]
+        }
+      },
+
+      { path: 'sem-acesso', component: SemAcessoComponent }
     ])
   ],
   providers: [
     AutenticacaoService,
     DefinicaoDeUrlsDeApis,
     UsuarioService,
-    UsuariosService
+    UsuariosService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -65,6 +65,7 @@ export class AutenticacaoService {
     let usuario = this.usuarioLogado;
     if (this.usuarioLogado == null) return false;
     let perfis: string[] = this.usuarioLogado.Perfis.split(',');
+    console.log('perfis', perfis);
     return perfis.indexOf(nomeDoPerfil) != -1;
   }
 }
