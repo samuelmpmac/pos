@@ -16,7 +16,7 @@ export class NormaOuControleService {
     return this.http.get(this.urls.compliance, { observe: 'response' })
       .pipe(
         map(response => response.body),
-        catchError(erro => { console.log(erro); return throwError(erro.error); })
+        catchError(erro => { return throwError(erro.error); })
       );
   }
 

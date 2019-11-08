@@ -17,7 +17,7 @@ export class UsuarioService {
     return this.http.post(this.urls.usuarios, usuario, { observe: 'response' })
       .pipe(
         map(response => true),
-        catchError(erro => { console.log(erro); return throwError(erro.error); })
+        catchError(erro => { return throwError(erro.error); })
       );
   }
 
@@ -25,7 +25,7 @@ export class UsuarioService {
     return this.http.put(this.urls.usuarios + '/' + usuario.id, usuario, { observe: 'response' })
       .pipe(
         map(response => true),
-        catchError(erro => { console.log(erro); return throwError(erro.error); })
+        catchError(erro => { return throwError(erro.error); })
       );
   }
 
@@ -33,7 +33,7 @@ export class UsuarioService {
     return this.http.get(this.urls.usuarios + '/' + id, { observe: 'response' })
       .pipe(
         map(response => response.body),
-        catchError(erro => { console.log(erro); return throwError(erro.error); })
+        catchError(erro => { return throwError(erro.error); })
       );
   }
 
@@ -41,7 +41,7 @@ export class UsuarioService {
     return this.http.delete(this.urls.usuarios + '/' + id, { observe: 'response' })
       .pipe(
         map(response => true),
-        catchError(erro => { console.log(erro); return throwError(erro.error); })
+        catchError(erro => { return throwError(erro.error); })
       );
   }
 }

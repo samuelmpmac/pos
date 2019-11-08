@@ -11,6 +11,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./peca.component.css']
 })
 export class PecaComponent implements OnInit {
+
+  @ViewChild('nome', { static: false }) nomeElement: ElementRef;
   @ViewChild('normaoucontrole', { static: false }) normaOuControleElement: NormaOuControleComponent;
   mensagensDeErro: any[];
   gravadoComSucesso: boolean = false;
@@ -30,7 +32,6 @@ export class PecaComponent implements OnInit {
 
           this.pecaService.obter(id).subscribe((pecaObtida: Peca) => {
 
-            console.log('pobt.. ', pecaObtida);
             this.idDaPecaSelecionada = id;
             this.pecaEmEdicao = pecaObtida;
 
@@ -65,11 +66,11 @@ export class PecaComponent implements OnInit {
               this.normaOuControleElement.normas.forEach(normaSelecionada => {
                 normaSelecionada.selecionado = false;
               });
+              this.nomeElement.nativeElement.focus();
             }
           },
           error => {
             this.mostrarErros = true;
-            console.log(error);
             this.mensagensDeErro = error;
           }
         );
@@ -107,7 +108,6 @@ export class PecaComponent implements OnInit {
           },
           error => {
             this.mostrarErros = true;
-            console.log(error);
             this.mensagensDeErro = error;
           }
         );

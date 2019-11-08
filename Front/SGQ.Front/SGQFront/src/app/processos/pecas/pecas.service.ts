@@ -1,3 +1,4 @@
+import { AutenticacaoService } from './../../controle-de-acesso/servicos/autenticacao.service';
 import { Injectable } from '@angular/core';
 
 import { DefinicaoDeUrlsDeApis } from 'src/app/definicao-de-urls-de-apis';
@@ -10,16 +11,18 @@ import { throwError } from 'rxjs';
 })
 export class PecasService {
 
-  constructor(private http: HttpClient, private urls: DefinicaoDeUrlsDeApis) {
-
+  constructor(
+    private http: HttpClient,
+    private urls: DefinicaoDeUrlsDeApis,
+    private authService: AutenticacaoService) {
   }
 
   public obterTodas() {
-    console.log(this.urls.usuarios);
-    return this.http.get(this.urls.pecas, { observe: 'response' })
+
+    return this.http.get(this.urls.pecas, { observe: 'response', headers: this.authService.headers })
       .pipe(
         map(response => response.body),
-        catchError(erro => { console.log(erro); return throwError(erro.error); })
+        catchError(erro => { return throwError(erro.error); })
       );
   }
 }

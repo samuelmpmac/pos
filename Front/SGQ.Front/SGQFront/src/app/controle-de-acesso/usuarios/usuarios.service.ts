@@ -14,11 +14,10 @@ export class UsuariosService {
   }
 
   public obterTodos() {
-    console.log(this.urls.usuarios);
     return this.http.get(this.urls.usuarios, { observe: 'response' })
       .pipe(
         map(response => response.body),
-        catchError(erro => { console.log(erro); return throwError(erro.error); })
+        catchError(erro => {  return throwError(erro.error); })
       );
   }
 }

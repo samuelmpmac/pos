@@ -19,7 +19,6 @@ export class NormaOuControleComponent implements OnInit {
       .subscribe(
         (result: any[]) => {
           if (result) {
-            console.log('nr,', result);
             result.forEach(element => {
               this.normas.push({ norma: element, selecionado: false });
             });
@@ -40,7 +39,6 @@ export class NormaOuControleComponent implements OnInit {
     return retorno;
   }
   logTeste() {
-    console.log(this.normasSelecionadas);
   }
 
 }

@@ -1,7 +1,7 @@
 import { DefinicaoDeUrlsDeApis } from './../../definicao-de-urls-de-apis';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
@@ -15,19 +15,10 @@ export class AutenticacaoService {
   }
 
   login(credentials) {
-    console.log(this.urls);
-    /*
-    this.http.get('', {observe: 'response'})
-    .subscribe(response =>{
-        console.log(response.body);
-    })
-    ;
-    */
-    //console.log(JSON.stringify(credentials));
     return this.http.post(this.urls.login, credentials, { observe: 'response' })
       .pipe(
         map(response => this.trataRetorno(response)),
-        catchError(erro => { console.log(erro); return throwError(erro.error); })
+        catchError(erro => throwError(erro.error))
       );
   }
 
@@ -65,10 +56,18 @@ export class AutenticacaoService {
     let usuario = this.usuarioLogado;
     if (this.usuarioLogado == null) return false;
     let perfis: string[] = this.usuarioLogado.Perfis.split(',');
-    console.log('perfis', perfis);
     return perfis.indexOf(nomeDoPerfil) != -1;
   }
+
+  get headers(): HttpHeaders {
+    let token = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    }
+
+    let headers_autenticacao = new HttpHeaders({
+      Authorization: 'Bearer ' + token
+    });
+    return headers_autenticacao;
+  }
 }
-
-
-

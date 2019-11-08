@@ -78,7 +78,7 @@ export class UsuarioComponent implements OnInit {
       if (this.usuarioEmEdicao.senha !== this.usuarioEmEdicao.confirmacaoDeSenha) {
         this.mostrarErros = true;
         this.mensagensDeErro.push({ errorMessage: 'Confirmação de senha incorreta' });
-        console.log(this.mensagensDeErro);
+
         return;
       }
 
@@ -93,7 +93,6 @@ export class UsuarioComponent implements OnInit {
           },
           error => {
             this.mostrarErros = true;
-            console.log(error);
             this.mensagensDeErro = error;
           }
         );
@@ -109,7 +108,6 @@ export class UsuarioComponent implements OnInit {
           },
           error => {
             this.mostrarErros = true;
-            console.log(error);
             this.mensagensDeErro = error;
           }
         );
@@ -132,7 +130,6 @@ export class UsuarioComponent implements OnInit {
           },
           error => {
             this.mostrarErros = true;
-            console.log(error);
             this.mensagensDeErro = error;
           }
         );

@@ -14,7 +14,6 @@ export class PerfilAuthGuard implements CanActivate {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    console.log('route.data.perfil ', route.data.perfil);
     if (this.authService.usuarioLogadoPossuiPerfil(route.data.perfil)) {
       return true;
     }
