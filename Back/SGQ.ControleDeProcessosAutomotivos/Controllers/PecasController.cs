@@ -9,10 +9,13 @@ using SGQ.ControleDeProcessosAutomotivos.Entidades;
 using SGQ.ControleDeProcessosAutomotivos.DatabaseContext;
 using SGQ.ControleDeProcessosAutomotivos.Repositorios;
 using SGQ.ControleDeProcessosAutomotivos.Servicos;
+using SGQ.Auth.Autorizacoes;
+using SGQ.Auth.Constantes;
 
 namespace SGQ.ControleDeProcessosAutomotivos.Controllers
 {
-    //[Authorize]
+    [Authorize]
+    [AutorizacaoPorPerfil(PerfilDeUsuario.AdministradorDeProcessos)]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class PecasController
